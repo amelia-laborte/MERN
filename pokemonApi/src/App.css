@@ -1,0 +1,8 @@
+.App {
+  padding: 0;
+  margin: auto;
+  width: 320px;
+}
+.pokemon_names {
+  list-style-position: inside;
+}
