@@ -1,21 +1,28 @@
 import React, { useState } from "react";
 
 const Todo = (props) => {
-
-  const mapTodoArrToListItems = (inputText, id) =>
-    
-  <li key={id}>{inputText}</li>;
-
   const [todoArr, setTodoArr] = useState([]);
+
+  const deleteTodo = (index) => {
+    console.log("deleteTodo");
+    const firstPart = todoArr.slice(0, index);
+    const secondPart = todoArr.slice(index + 1);
+    setTodoArr([...firstPart, ...secondPart]);
+  };
+
+  const mapTodoArrToListItems = (inputText, index) => {
+    return (
+      <li key={index}>
+        {inputText}
+        <button onClick={() => deleteTodo(index)}>Delete</button>
+      </li>
+    );
+  };
 
   const createTodo = (submitEvent) => {
     submitEvent.preventDefault();
-    console.log(submitEvent);
     const inputText = document.getElementById("id").value;
-    
-    // setTodoItemText(inputText);
     setTodoArr([inputText, ...todoArr]);
-
   };
 
   return (
