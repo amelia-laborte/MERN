@@ -3,17 +3,30 @@ import React, { useState } from "react";
 const Todo = (props) => {
   const [todoArr, setTodoArr] = useState([]);
 
+  const handleOnChange = (e, index) => {
+    console.log("handleOnChange")
+    const checked = e.target.checked;
+    const updatedTodos  = [...todoArr]
+    const todo = updatedTodos[index]
+    todo.completed = checked
+    setTodoArr(updatedTodos)
+  };
+
   const deleteTodo = (index) => {
-    console.log("deleteTodo");
     const firstPart = todoArr.slice(0, index);
     const secondPart = todoArr.slice(index + 1);
     setTodoArr([...firstPart, ...secondPart]);
   };
 
-  const mapTodoArrToListItems = (inputText, index) => {
+  const mapTodoArrToListItems = (todoObj, index) => {
     return (
       <li key={index}>
-        {inputText}
+        <input
+          type="checkbox"
+          checked={todoObj.completed}
+          onChange={(e) => handleOnChange(e, index)}
+        ></input>
+        {todoObj.text}
         <button onClick={() => deleteTodo(index)}>Delete</button>
       </li>
     );
@@ -22,7 +35,8 @@ const Todo = (props) => {
   const createTodo = (submitEvent) => {
     submitEvent.preventDefault();
     const inputText = document.getElementById("id").value;
-    setTodoArr([inputText, ...todoArr]);
+    const newTodo = { text: inputText, completed: false };
+    setTodoArr([newTodo, ...todoArr]);
   };
 
   return (
